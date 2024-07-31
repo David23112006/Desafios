@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Reajuste - Calculos</title>
+</head>
+<body>
+    <h1>Calcular Reajuste de funcionarios!</h1>
+    <button onclick="desconto()"> iniciar analise</button>
+
+    <section id=resultado></section>
+    <p>o resultado é:</p>
+</section>
+<script>
+    function desconto(){
+        let n1 = Number(window.prompt('Qual o salario do individuo'))
+        let n2 = Number(window.prompt('Qual o percentual o reajuste salarial: '))
+
+        let novosalar = n1=(n1*(n2/100))
+
+        let res = document.getElementById('resultado')
+        res.innerHTML = `<p>O novo salario com reajuste e de R$ ${novosalar.toFixed(2)}</p>`
+    }
+</script>
+
+</body>
+</html>

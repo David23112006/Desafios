@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhaskara v1.0</title>
+</head>
+<body>
+    <h1>Bhaskara v1.0</h1>
+    <button onclick="calcularBhaskara()">Calcular Bhaskara</button>
+    <section id="situacao">
+        <p>Os resultados vão aparecer aqui</p>
+    </section>
+
+    <script>
+        function calcularBhaskara() {
+            // Recebe os valores dos coeficientes
+            let valorA = Number(window.prompt('Qual é o coeficiente A?'));
+            let valorB = Number(window.prompt('Qual é o coeficiente B?'));
+            let valorC = Number(window.prompt('Qual é o coeficiente C?'));
+
+            // Calcula o valor de delta
+            let delta = Math.pow(valorB, 2) - (4 * valorA * valorC);
+
+            // Calcula as raízes usando a fórmula de Bhaskara
+            let raiz1, raiz2;
+            if (delta > 0) {
+                raiz1 = (-valorB + Math.sqrt(delta)) / (2 * valorA);
+                raiz2 = (-valorB - Math.sqrt(delta)) / (2 * valorA);
+            } else if (delta === 0) {
+                raiz1 = raiz2 = -valorB / (2 * valorA);
+            } else {
+                raiz1 = raiz2 = 'Não há raízes reais.';
+            }
+
+            // Exibe os resultados
+            let res = document.getElementById('situacao');
+            res.innerHTML = `
+                <p>O valor de delta é: <mark>${delta}</mark></p>
+                <p>Raiz 1: <mark>${raiz1}</mark></p>
+                <p>Raiz 2: <mark>${raiz2}</mark></p>`;
+        }
+    </script>
+</body>
+</html>

@@ -5,88 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeria de Fotos</title>
     <style>
+        /* Estilo do fundo gradiente */
         body {
-            background: linear-gradient(to right, darkblue, gold);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             font-family: Arial, sans-serif;
-            color: white;
-            text-align: center;
+            background: linear-gradient(135deg, #00008B, #FFD700); /* Azul escuro para amarelo ouro */
         }
+
+        /* Container da galeria */
         .gallery-container {
-            max-width: 600px;
-            margin: 50px auto;
+            text-align: center;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.8);
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-        .gallery-container img {
+
+        /* Imagem da galeria */
+        .gallery-image {
             width: 100%;
             height: auto;
-            border-radius: 10px;
+            border-radius: 8px;
         }
-        .nav-buttons {
-            margin-top: 20px;
+
+        /* Estilo dos botões */
+        .gallery-buttons {
+            margin-top: 15px;
         }
-        .nav-buttons button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
+
+        .gallery-buttons button {
             padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 5px;
+            margin: 0 10px;
             font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #00008B; /* Azul escuro */
+            color: #FFD700; /* Amarelo ouro */
+            transition: background-color 0.3s ease;
         }
-        .nav-buttons button:hover {
-            background-color: #45a049;
+
+        .gallery-buttons button:hover {
+            background-color: #FFD700;
+            color: #00008B;
         }
     </style>
 </head>
 <body>
 
-    <h1>Galeria de Fotos</h1>
-
+    <!-- Container da galeria -->
     <div class="gallery-container">
-        <img id="galleryImage" src="https://via.placeholder.com/600x400.png?text=Foto+1" alt="Foto da Galeria">
-        
-        <div class="nav-buttons">
-            <button id="prevButton">Anterior</button>
-            <button id="nextButton">Próximo</button>
+        <!-- Imagem exibida -->
+        <img id="galleryImage" class="gallery-image" src="img1.jpeg" alt="Galeria de Fotos">
+
+        <!-- Botões de navegação -->
+        <div class="gallery-buttons">
+            <button onclick="previousImage()">Anterior</button>
+            <button onclick="nextImage()">Próxima</button>
         </div>
     </div>
 
     <script>
-        // Array de URLs das imagens
+        // Lista de URLs das imagens
         const images = [
-            'https://via.placeholder.com/600x400.png?text=Foto+1',
-            'https://via.placeholder.com/600x400.png?text=Foto+2',
-            'https://via.placeholder.com/600x400.png?text=Foto+3',
-            'https://via.placeholder.com/600x400.png?text=Foto+4',
-            'https://via.placeholder.com/600x400.png?text=Foto+5'
+            'img1.jpeg',
+            'img2.jpeg',
+            'img3.jpeg',
+            'img4.jpeg'
         ];
 
-        let currentIndex = 0;
+        let currentIndex = 0; // Índice da imagem atual
 
-        const galleryImage = document.getElementById('galleryImage');
-        const prevButton = document.getElementById('prevButton');
-        const nextButton = document.getElementById('nextButton');
-
-        // Função para atualizar a imagem da galeria
-        function updateImage() {
-            galleryImage.src = images[currentIndex];
+        // Função para exibir a imagem anterior
+        function previousImage() {
+            currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+            document.getElementById('galleryImage').src = images[currentIndex];
         }
 
-        // Evento de clique para o botão "Anterior"
-        prevButton.addEventListener('click', function() {
-            currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
-            updateImage();
-        });
-
-        // Evento de clique para o botão "Próximo"
-        nextButton.addEventListener('click', function() {
+        // Função para exibir a próxima imagem
+        function nextImage() {
             currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
-            updateImage();
-        });
+            document.getElementById('galleryImage').src = images[currentIndex];
+        }
     </script>
 
 </body>

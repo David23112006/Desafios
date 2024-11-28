@@ -1,158 +1,153 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    
- 
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cálculo de Salário para 10 Funcionários</title>
-    
-    
-<style>
-        /* Gradiente de fundo
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Dívida do Cartão</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(to bottom, #ffffff, #8a2be2); /* Gradiente de branco para roxo */
+    }
 
-        /*
+    .container {
+      width: 90%;
+      max-width: 600px;
+      padding: 20px;
+      background: #fff;
+      border: 2px solid #8a2be2;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        /* Gradiente de fundo */
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #e0c3fc, #ffffff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    h1 {
+      text-align: center;
+      color: #8a2be2;
+    }
 
-        /* Estilos do contêiner principal */
-        .container {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 100%;
-            overflow-y: auto;
-            max-height: 90vh;
-        }
+    form {
+      margin-bottom: 20px;
+    }
 
-        h1 {
-            text-align: center;
-            color: #6a0dad;
-        }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
 
-        label, input {
-            display: block;
-            width: 100%;
-            margin-top: 10px;
-        }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-        button {
-            background-color: #6a0dad;
-            color: #ffffff;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-        }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #8a2be2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-        button:hover {
-            background-color: #8b2bc5;
-        }
+    button:hover {
+      background-color: #6a1bbd;
+    }
 
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
-            color: #333;
-        }
-    </style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #8a2be2;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #8a2be2;
+      color: white;
+    }
+
+    td {
+      background-color: #f9f9f9;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Calculadora de Dívida do Cartão</h1>
+    <form id="debtForm">
+      <label for="debtValue">Valor da Dívida (R$):</label>
+      <input type="number" id="debtValue" placeholder="Digite o valor da dívida" required>
 
-<div class="container">
-    <h1>Calculadora de Imposto para 10 Funcionários</h1>
-    
-    <!-- Repetindo campos de entrada para 10 funcionários -->
-    <div id="funcionarios">
-        <!-- Os campos para 10 funcionários serão gerados aqui -->
-    </div>
+      <label for="months">Meses de Atraso:</label>
+      <input type="number" id="months" placeholder="Digite os meses de atraso" required>
 
-    <button onclick="calcularSalarios()">Calcular Salários com Imposto</button>
+      <label for="interestRate">Taxa de Juros Mensal (%):</label>
+      <input type="number" id="interestRate" placeholder="Digite a taxa de juros mensal" required>
 
-    <div class="result" id="resultado"></div>
-</div>
+      <button type="submit">Calcular e Salvar</button>
+    </form>
 
-<script>
-    // Função para criar os campos para os funcionários
-    function criarCampos() {
-        const container = document.getElementById("funcionarios");
+    <table>
+      <thead>
+        <tr>
+          <th>Valor Inicial (R$)</th>
+          <th>Meses</th>
+          <th>Taxa de Juros (%)</th>
+          <th>Valor Final (R$)</th>
+        </tr>
+      </thead>
+      <tbody id="resultTable">
+        <!-- Os dados calculados aparecerão aqui -->
+      </tbody>
+    </table>
+  </div>
 
-        for (let i = 1; i <= 10; i++) {
-            const funcionarioDiv = document.createElement("div");
-            funcionarioDiv.innerHTML = `
-                <h3>Funcionário ${i}</h3>
-                <label for="nome${i}">Nome:</label>
-                <input type="text" id="nome${i}" placeholder="Digite o nome">
+  <script>
+    document.getElementById('debtForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Evita o recarregamento da página
 
-                <label for="salario${i}">Salário Total:</label>
-                <input type="number" id="salario${i}" placeholder="Digite o salário" step="0.01">
-            `;
-            container.appendChild(funcionarioDiv);
-        }
-    }
+      // Obter os valores do formulário
+      const debtValue = parseFloat(document.getElementById('debtValue').value);
+      const months = parseInt(document.getElementById('months').value);
+      const interestRate = parseFloat(document.getElementById('interestRate').value) / 100;
 
-    // Função para calcular o salário com imposto para todos os funcionários
-    function calcularSalarios() {
-        let resultadoHTML = "";
+      // Calcular o valor final com juros compostos
+      const finalValue = debtValue * Math.pow((1 + interestRate), months);
 
-        for (let i = 1; i <= 10; i++) {
-            const nome = document.getElementById(`nome${i}`).value;
-            const salario = parseFloat(document.getElementById(`salario${i}`).value);
+      // Criar uma nova linha na tabela
+      const tableRow = `
+        <tr>
+          <td>R$ ${debtValue.toFixed(2)}</td>
+          <td>${months}</td>
+          <td>${(interestRate * 100).toFixed(2)}%</td>
+          <td>R$ ${finalValue.toFixed(2)}</td>
+        </tr>
+      `;
 
-            if (isNaN(salario) || salario < 0) {
-                resultadoHTML += `<p>Funcionário ${i}: Salário inválido.</p>`;
-                continue;
-            }
+      // Adicionar a nova linha à tabela
+      document.getElementById('resultTable').insertAdjacentHTML('beforeend', tableRow);
 
-            let imposto = 0;
-
-            // Definir a taxa de imposto com base no salário
-            if (salario >= 5000) {
-                imposto = 17.5;
-            } else if (salario >= 4000) {
-                imposto = 12;
-            } else if (salario >= 3000) {
-                imposto = 7.5;
-            } else if (salario >= 1800) {
-                imposto = 3.5;
-            } else {
-                imposto = 0;
-            }
-
-            // Calcula o valor do imposto e o salário após o imposto
-            const valorImposto = (imposto / 100) * salario;
-            const salarioFinal = salario - valorImposto;
-
-            // Adiciona o resultado para o funcionário atual
-            resultadoHTML += `
-                <p>
-                    Funcionário ${i}: ${nome} <br>
-                    Salário Total: R$ ${salario.toFixed(2)} <br>
-                    Imposto (${imposto}%): R$ ${valorImposto.toFixed(2)} <br>
-                    Salário com Imposto: R$ ${salarioFinal.toFixed(2)}
-                </p>
-            `;
-        }
-
-        // Exibe o resultado final para todos os funcionários
-        document.getElementById("resultado").innerHTML = resultadoHTML;
-    }
-
-    // Chamar a função para criar os campos ao carregar a página
-    window.onload = criarCampos;
-</script>
-
+      // Limpar os campos do formulário
+      document.getElementById('debtForm').reset();
+    });
+  </script>
 </body>
 </html>
+

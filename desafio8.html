@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Reajustes - Calculos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reajustes - Cálculos</title>
+    <style>
+        body { font: 14pt Arial, sans-serif; margin: 20px; }
+        button { font-size: 14pt; padding: 10px; margin: 10px 0; cursor: pointer; }
+        section { margin-top: 20px; }
+    </style>
 </head>
 <body>
-    <h1>Calcular Reajuste de funcionario!</h1>
-    <button onclick="desconto()">Iniciar a analise</button>
+    <h1>Calcular Reajuste de Funcionário!</h1>
+    <button onclick="desconto()">Iniciar a Análise</button>
 
     <section id="resultado">
-        <p>o resultado é :</p>
+        <p>O resultado aparecerá aqui...</p>
     </section>
 
     <script>
         function desconto() {
-            let n1 = Number(window.prompt('Qual salario do individuo'))
-            let n2 = Number(window.prompt('Qual percentual do rejuste salarial: '))
+            // Solicita os dados do usuário
+            let n1 = Number(window.prompt('Qual o salário do indivíduo?'));
+            let n2 = Number(window.prompt('Qual o percentual do reajuste salarial?'));
 
-            let novosalar = n1+(n1*(n2/100))
+            // Calcula o novo salário
+            let novosalar = n1 + (n1 * (n2 / 100));
 
-            let res = document.getElementById('resultado')
-            res.innerHTML = <p> o movo salario com o reajuste é de R$ ${novosalar.toFixed(2)}</p>
+            // Atualiza o conteúdo da seção de resultado
+            let res = document.getElementById('resultado');
+            res.innerHTML = `
+                <p>O novo salário, com o reajuste de ${n2}%, é de <strong>R$ ${novosalar.toFixed(2)}</strong>.</p>
+            `;
         }
     </script>
 </body>
